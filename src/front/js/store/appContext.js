@@ -28,7 +28,6 @@ const injectContext = PassedComponent => {
 			 * you should do your ajax requests or fetch api requests here. Do not use setState() to save data in the
 			 * store, instead use actions, like this:
 			 **/
-			state.actions.getMessage(); // <---- calling this function from the flux.js actions
 			state.actions.syncTokenFromSessionStorage(); // sirve para que al recargar la pagina se obtenga el token almacenado en el front y en conjunto con el login si este existe redirecciona desde la ruta login hacia la ruta home
 		}, []);
 

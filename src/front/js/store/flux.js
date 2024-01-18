@@ -62,10 +62,15 @@ const getState = ({ getStore, getActions, setStore }) => {
             	}
 			},
 
-			getMessage: async () => {
+			getMessage: async () => {      // estoy modificando esta funcion para que acute bajo autorizacion del token
+				const store = getStore()   // uso el get store para traer el valor de token almacenado en el store
 				try{
 					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch(process.env.BACKEND_URL + "/api/hello", {
+						headers: {
+							"Authorization": "Bearer" + store.token   //añadi el header de Authorization esta info esta en el Basic usage del Flask JWT extended
+						}																// 'Authorization: Bearer <JWT>
+					})
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves

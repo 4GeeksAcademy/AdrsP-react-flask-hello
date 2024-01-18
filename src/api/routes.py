@@ -28,3 +28,11 @@ def create_token():                     # es decir el url del server del backend
 
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
+
+@api.route("/hello", methods=["GET"])
+@jwt_required()          #este decorador se aplica para que se exija un token de autorizacion para correr la funcion del endpoint
+def get_hello():
+    dictionary = {
+        "message": "hello worldo"
+    }                     
+    return jsonify(dictionary)
