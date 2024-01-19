@@ -23,16 +23,35 @@ CORS(api)
 def create_token():                     # es decir el url del server del backend
     email = request.json.get("email", None)   #obtengo del fecth el email puede ser username tambien
     password = request.json.get("password", None)   #obtengo del fecth el password
-    if email != "test" or password != "test":       # aca estoy simulando que le paso estos valores y comparo con la base de datos si estan o no
+    if email != "Andres" or password != "1234":       # aca estoy simulando que le paso estos valores y comparo con la base de datos si estan o no
         return jsonify({"msg": "Bad username or password"}), 401
 
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=email) # nota al editor aca identity se guarda como la variable email, asi que cuando se llame con un get_jwt_identity tendra ese valor en este caso el del email
     return jsonify(access_token=access_token)
 
 @api.route("/hello", methods=["GET"])
 @jwt_required()          #este decorador se aplica para que se exija un token de autorizacion para correr la funcion del endpoint
 def get_hello():
+
+    usuario = get_jwt_identity()  # la funcion get_jwt_idendity permite conocer quien creo el token o bueno quien hizo la solicitud para crear el token
     dictionary = {
-        "message": "hello worldo"
+        "message": "Welcome back " + usuario
     }                     
     return jsonify(dictionary)
+
+@api.route('/user', methods=['GET'])  # por probar le puse esta ruta 
+def get_all_users():
+    user = User.query.all() # trae una lista de objetos de la tabla user
+    results = list(map(lambda usuarios : usuarios.serialize(), user)) # se realiza el mapeo y posterior generacion de la lista con los resultados
+    
+    return jsonify(results), 200
+
+@api.route("/singup", methods=["POST"])
+def new_user():
+    data = request.json 
+    new_record = User(**data)
+
+    db.session.add(new_record)
+    db.session.commit()
+
+    return jsonify({'message': 'User created successfully'}), 201

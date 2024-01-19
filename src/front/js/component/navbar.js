@@ -9,12 +9,15 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<span className="navbar-brand mb-0 h1">Home</span>
 				</Link>
 				<div className="ml-auto">
+					<Link to="/singup">
+						<button className="btn btn-primary mx-2">Sing Up</button>
+					</Link> 
 					{ !store.token ?    // uso un ternario para ver si no existe el token en el store, si no existe el button va a login
 					<Link to="/login">
-						<button className="btn btn-primary">Please log in</button>
+						<button className="btn btn-primary">Log in</button>
 					</Link> 
 					:  // si no existe el boton llama la accion logout que reinicia el sessionStorage del front y el store de la app
 					<button onClick={() => actions.logout() } className="btn btn-primary">log out</button>

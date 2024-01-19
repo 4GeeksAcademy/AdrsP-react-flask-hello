@@ -6,9 +6,9 @@ import "../../styles/home.css";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
-	// useEffect(() => {
-	// 	actions.getMessage();
-	// }, [])
+	useEffect(() => {
+		if (store.token && store.token != "" && store.token != undefined) actions.getMessage(); // los condicionales para store.token implican que get message no sera llamado a menos que se tenga un valor aceptable como token
+	}, [store.token]) // en el array de useEffect se ingresa store.token para que el use effect se active cada vez que cambie el valor de token en la store
 
 	return (
 		<div className="text-center mt-5">
