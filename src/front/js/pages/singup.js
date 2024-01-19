@@ -13,7 +13,7 @@ export const Singup = () => {
     const handleClick = ()=>{
         // que quiero bueno quiero hacer un fetch que mande esos datos tipo post para guardarlos en la base de datos
         actions.singup(email, password)
-
+                        // tambien hace falta mostrar un mensaje de error cuando no cree el usuario nuevo xq el nombre ya esta en uso, se podria llevar la lista de usuarios al store y comprobar alli primero en la funcion del flux quiza
         navigate('/') // lo quiero redireccionar a home pero solo cuando se cree el usuario de manera exitosa
     };
 

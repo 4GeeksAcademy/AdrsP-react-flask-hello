@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context); // se injecta el contexto a la navbar para que se pueda recargar cuando estemos log in (existe un token)
-	
+	const navigate = useNavigate()
+
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
@@ -20,7 +21,7 @@ export const Navbar = () => {
 						<button className="btn btn-primary">Log in</button>
 					</Link> 
 					:  // si no existe el boton llama la accion logout que reinicia el sessionStorage del front y el store de la app
-					<button onClick={() => actions.logout() } className="btn btn-primary">log out</button>
+					<button onClick={() => {actions.logout(), navigate('/')}} className="btn btn-primary">log out</button> // aca estoy forzando a que cuando cierre sesion se vaya al home
 					}
 				</div>
 			</div>

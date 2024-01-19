@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			token: "",
+			currentUser: "",
+			succesfully_created: false,
 			message: null,
 			demo: [
 				{
@@ -55,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("this came from the backend", data)     // sessionStorage o localStorage permiten almacenar datos en el front end
                 	sessionStorage.setItem("token", data.access_token) // durante el run time inclcuso si se recarga la pagina, puedes usarlos con .setItem o .getItem segun sea el caso
 					setStore({token: data.access_token})		      // data es la respuesta con el objeto que contiene el token, luego se obtiene el token con el key .acces_token                                                
-            	
+					setStore({currentUser: email})
 				}
 				catch(error){                                      
                 	console.error("there was an error loggin in!", error)
@@ -85,6 +87,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				catch(error){                                      
                 	console.error("there was an error", error)
             	}
+			},
+			// pendiente por revisar este metodo tiene problemas
+			deleteUser: async () =>{            
+				const store = getStore()
+				const response = await fetch('https://jubilant-winner-g4qwv5qp6w6gcw4v6-3001.app.github.dev/api/deleteUser', {
+        		method: 'DELETE',
+				headers: {
+					"Authorization": "Bearer " + store.token   //añadi el header de Authorization esta info esta en el Basic usage del Flask JWT extended
+				},
+				body: {
+					"email": currentUser
+				}
+    			});
+    			if (response.ok) {
+        		const data = await response.json();
+        		return data;
+    			} else {
+        		console.log('error: ', response.status, response.statusText);
+        		/* Handle the error returned by the HTTP request */
+        		return {error: {status: response.status, statusText: response.statusText}};
+    			};
 			},
 
 			getMessage: async () => {      // estoy modificando esta funcion para que acute bajo autorizacion del token

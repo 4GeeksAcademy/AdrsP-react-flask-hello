@@ -16,7 +16,7 @@ export const Login = () => {
         actions.login(email, password)    // le envio el email y password desde sus respectivos hooks 
     };
     
-   if (store.token && store.token != "" && store.token != undefined) navigate('/'); // esta linea es para redireccionar la pagina de login una vez exista un token generado por el backend
+   if (store.token && store.token != "" && store.token != undefined) navigate('/private'); // esta linea es para redireccionar la pagina de login una vez exista un token generado por el backend
 
 	return (
 		<div className="text-center mt-5">
