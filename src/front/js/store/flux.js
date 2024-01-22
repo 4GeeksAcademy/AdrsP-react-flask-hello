@@ -27,6 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			syncTokenFromSessionStorage: () => {     // esta action es para guardar el token en sessionStorage en la "memoria del front"
 				const token = sessionStorage.getItem("token");
 				console.log("application just loaded synching the session storage token")
+				console.log(token)
 				if (token && token != "" && token != undefined) setStore({token: token}) 
 			},
 
@@ -78,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             		})
         		})
             		if(resp.status !== 201) {                
-						alert("se prendio la gozadera, a buscar el error");    
+						alert("Ese usuario ya existe");    
 						return false
 					}
 					const data = await resp.json();
@@ -91,23 +92,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// pendiente por revisar este metodo tiene problemas
 			deleteUser: async () =>{            
 				const store = getStore()
+				console.log(store.token)
 				const response = await fetch('https://jubilant-winner-g4qwv5qp6w6gcw4v6-3001.app.github.dev/api/deleteUser', {
         		method: 'DELETE',
 				headers: {
 					"Authorization": "Bearer " + store.token   //añadi el header de Authorization esta info esta en el Basic usage del Flask JWT extended
 				},
-				body: {
-					"email": currentUser
-				}
     			});
-    			if (response.ok) {
-        		const data = await response.json();
-        		return data;
-    			} else {
-        		console.log('error: ', response.status, response.statusText);
-        		/* Handle the error returned by the HTTP request */
-        		return {error: {status: response.status, statusText: response.statusText}};
-    			};
+    			const result = await response.json();
+				console.log('Data deleted successfully:', result);
+    			return result;
 			},
 
 			getMessage: async () => {      // estoy modificando esta funcion para que acute bajo autorizacion del token

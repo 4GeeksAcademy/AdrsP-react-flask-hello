@@ -23,8 +23,8 @@ export const Login = () => {
 			<h1>Login</h1>  {/* si token existe, es distinto de '' y no esta indefinido, mensaje si no se carga la plantilla de log in */}
                 {store.token && store.token != "" && store.token != undefined ? "You are logged in with" + store.token :
                 <div>
-                    <input type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />   {/*Esto se le llama un componente controlado, dado que cada vez que cambia el input se reevalua el valor del input y se almacena*/}
-                    <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value) } />
+                    <input className="me-2" type="text" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />   {/*Esto se le llama un componente controlado, dado que cada vez que cambia el input se reevalua el valor del input y se almacena*/}
+                    <input className="me-2" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value) } />
                     <button onClick={handleClick} > Login </button>
                 </div>
                 }
