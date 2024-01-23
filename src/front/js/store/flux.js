@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({token: null})	
 			},
 
-			login: async (email, password) =>{          // realiza el post con la informacion del email y password para que el backend compare y si coincide 
+			login: async (email, password) =>{    // realiza el post con la informacion del email y password para que el backend compare y si coincide 
 				try{									// recibe el token de vuelta
 				const resp = await fetch('https://jubilant-winner-g4qwv5qp6w6gcw4v6-3001.app.github.dev/api/token', {
             		method: 'POST',
@@ -92,7 +92,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// pendiente por revisar este metodo tiene problemas
 			deleteUser: async () =>{            
 				const store = getStore()
-				console.log(store.token)
 				const response = await fetch('https://jubilant-winner-g4qwv5qp6w6gcw4v6-3001.app.github.dev/api/deleteUser', {
         		method: 'DELETE',
 				headers: {
@@ -100,7 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				},
     			});
     			const result = await response.json();
-				console.log('Data deleted successfully:', result);
+				console.log('User deleted successfully:', result);
     			return result;
 			},
 

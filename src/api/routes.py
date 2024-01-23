@@ -68,13 +68,12 @@ def new_user():
     else:
         return jsonify({'message': 'that user already exist'}), 400
 
-# tengo problemas con este metodo de como pasarle la informacion para que elimine el usuario trate con un jwt identity pero no lo cacha
+# Eliminar usuario
 @api.route('/deleteUser', methods=['DELETE'])
 @jwt_required() 
 def delete_favorite():
-    user_email = "Andres"
-    print(user_email) 
-    deleted_user = User.query.filter_by(email = user_email)
+    email = get_jwt_identity()        # obtengo la info del usuario del token
+    deleted_user = User.query.filter_by(email=email).first() # busco el usuario en la base de datos
    
     if deleted_user is None:
         return ({"message": "no existe el usuario"}), 404
